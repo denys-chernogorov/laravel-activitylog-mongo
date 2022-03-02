@@ -5,7 +5,7 @@ namespace Spatie\Activitylog;
 use Closure;
 use DateTimeInterface;
 use Illuminate\Contracts\Config\Repository;
-use Illuminate\Database\Eloquent\Model;
+use Jenssegers\Mongodb\Eloquent\Model;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
@@ -44,19 +44,19 @@ class ActivityLogger
         return $this;
     }
 
-    public function performedOn(Model $model): static
+    public function performedOn( $model): static
     {
         $this->getActivity()->subject()->associate($model);
 
         return $this;
     }
 
-    public function on(Model $model): static
+    public function on($model): static
     {
         return $this->performedOn($model);
     }
 
-    public function causedBy(Model | int | string | null $modelOrId): static
+    public function causedBy($modelOrId): static
     {
         if ($modelOrId === null) {
             return $this;
@@ -69,7 +69,7 @@ class ActivityLogger
         return $this;
     }
 
-    public function by(Model | int | string | null $modelOrId): static
+    public function by( $modelOrId): static
     {
         return $this->causedBy($modelOrId);
     }

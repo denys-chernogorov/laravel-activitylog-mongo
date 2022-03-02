@@ -2,9 +2,9 @@
 
 namespace Spatie\Activitylog\Models;
 
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Jenssegers\Mongodb\Eloquent\Builder;
+use Jenssegers\Mongodb\Eloquent\Model;
+use Jenssegers\Mongodb\Relations\MorphTo;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Spatie\Activitylog\Contracts\Activity as ActivityContract;
@@ -72,14 +72,14 @@ class Activity extends Model implements ActivityContract
         return $query->whereIn('log_name', $logNames);
     }
 
-    public function scopeCausedBy(Builder $query, Model $causer): Builder
+    public function scopeCausedBy(Builder $query, $causer): Builder
     {
         return $query
             ->where('causer_type', $causer->getMorphClass())
             ->where('causer_id', $causer->getKey());
     }
 
-    public function scopeForSubject(Builder $query, Model $subject): Builder
+    public function scopeForSubject(Builder $query, $subject): Builder
     {
         return $query
             ->where('subject_type', $subject->getMorphClass())

@@ -2,9 +2,9 @@
 
 namespace Spatie\Activitylog\Contracts;
 
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Jenssegers\Mongodb\Eloquent\Builder;
+use Jenssegers\Mongodb\Eloquent\Model;
+use Jenssegers\Mongodb\Relations\MorphTo;
 use Illuminate\Support\Collection;
 
 interface Activity
@@ -19,9 +19,9 @@ interface Activity
 
     public function scopeInLog(Builder $query, ...$logNames): Builder;
 
-    public function scopeCausedBy(Builder $query, Model $causer): Builder;
+    public function scopeCausedBy(Builder $query, $causer): Builder;
 
     public function scopeForEvent(Builder $query, string $event): Builder;
 
-    public function scopeForSubject(Builder $query, Model $subject): Builder;
+    public function scopeForSubject(Builder $query, $subject): Builder;
 }

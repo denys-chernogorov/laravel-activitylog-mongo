@@ -4,9 +4,9 @@ namespace Spatie\Activitylog\Traits;
 
 use Carbon\CarbonInterval;
 use DateInterval;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Jenssegers\Mongodb\Eloquent\Model;
+use Jenssegers\Mongodb\Eloquent\SoftDeletes;
+use Jenssegers\Mongodb\Relations\MorphMany;
 use Illuminate\Pipeline\Pipeline;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
@@ -38,13 +38,13 @@ trait LogsActivity
 
         static::eventsToBeRecorded()->each(function ($eventName) {
             if ($eventName === 'updated') {
-                static::updating(function (Model $model) {
+                static::updating(function ($model) {
                     $oldValues = (new static())->setRawAttributes($model->getRawOriginal());
                     $model->oldAttributes = static::logChanges($oldValues);
                 });
             }
 
-            static::$eventName(function (Model $model) use ($eventName) {
+            static::$eventName(function ($model) use ($eventName) {
                 $model->activitylogOptions = $model->getActivitylogOptions();
 
                 if (! $model->shouldLogEvent($eventName)) {
@@ -317,7 +317,7 @@ trait LogsActivity
         return $properties;
     }
 
-    public static function logChanges(Model $model): array
+    public static function logChanges($model): array
     {
         $changes = [];
         $attributes = $model->attributesToBeLogged();
@@ -365,7 +365,7 @@ trait LogsActivity
         return $changes;
     }
 
-    protected static function getRelatedModelAttributeValue(Model $model, string $attribute): array
+    protected static function getRelatedModelAttributeValue($model, string $attribute): array
     {
         $relatedModelNames = explode('.', $attribute);
         $relatedAttribute = array_pop($relatedModelNames);
@@ -384,7 +384,7 @@ trait LogsActivity
         return [implode('.', $attributeName) => $relatedModel->$relatedAttribute ?? null];
     }
 
-    protected static function getRelatedModelRelationName(Model $model, string $relation): string
+    protected static function getRelatedModelRelationName($model, string $relation): string
     {
         return Arr::first([
             $relation,
@@ -395,7 +395,7 @@ trait LogsActivity
         }, $relation);
     }
 
-    protected static function getModelAttributeJsonValue(Model $model, string $attribute): mixed
+    protected static function getModelAttributeJsonValue($model, string $attribute): mixed
     {
         $path = explode('->', $attribute);
         $modelAttribute = array_shift($path);
