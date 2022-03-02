@@ -86,7 +86,7 @@ Find yourself stuck using the package? Found a bug? Do you have general question
 You can install the package via composer:
 
 ```bash
-composer require spatie/laravel-activitylog
+composer require denys-chernogorov/laravel-activitylog-mongo
 ```
 
 The package will automatically register itself.

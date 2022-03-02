@@ -1,5 +1,5 @@
 {
-    "name": "spatie/laravel-activitylog",
+    "name": "denys-chernogorov/laravel-activitylog-mongo",
     "description": "A very simple activity logger to monitor the users of your website or application",
     "license": "MIT",
     "keywords": [
@@ -29,7 +29,7 @@
             "role": "Developer"
         }
     ],
-    "homepage": "https://github.com/spatie/activitylog",
+    "homepage": "https://github.com/denys-chernogorov/laravel-activitylog-mongo",
     "require": {
         "php": "^8.0",
         "illuminate/config": "^8.0 || ^9.0",
